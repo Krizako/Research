@@ -1,0 +1,50 @@
+#importing the libraries
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import folium
+import seaborn as sns
+from folium.plugins import MarkerCluster
+from folium.plugins import HeatMap
+
+
+
+#reading the data from the CSV file
+data=pd.read_csv('Survey Data for Research.csv', encoding='Windows-1252')
+
+
+
+#loading the CSV file into a DataFrame
+df = pd.read_csv('Survey Data for Research.csv', encoding='Windows-1252')
+# Checking if the data is loaded by printing the first few rows
+print(df.head())
+
+
+
+# Set the figure size and dpi
+plt.figure(figsize=(10, 6), dpi=400)
+
+# Create the dot plot using seaborn
+ax = sns.countplot(x='Please select your gender.', data=df)
+total = float(len(df))
+for p in ax.patches:
+    count = format(p.get_height(), ',.0f')
+    percent = '{:.1%}'.format(p.get_height()/total)
+    x = p.get_x() + p.get_width() / 2
+    y = p.get_height()
+    ax.annotate(f'{count}\n{percent}', (x, y), ha='center', va='center', fontsize=8, color='black', xytext=(0, 10), textcoords='offset points')
+
+# Set the title and axis labels
+plt.title("Gender Distribution")
+plt.xlabel("Gender")
+plt.ylabel("Number Of Respondents")
+
+# Save the plot
+plt.savefig("gender_distribution.png")
+
+# Display the plot
+plt.show()
+
+
+
+
